@@ -1,0 +1,109 @@
+body{
+    background-color: #ffffff;
+    color: #333333;
+    font-family: 'Robot', sans-serif;
+    /* roboto tipo especial de sans-serif */
+    font-size: 16px;
+}
+
+a{
+    color: #15d11c;
+    text-decoration: underline;
+}
+/* passar o mouse */
+a:hover{
+    color:#1a631d;
+}
+header {
+    background-color: #ff9800;
+    /* laranja */
+    color: #ffffff;
+    padding: 10px 20px;
+}
+
+nav{
+    background-color: yellow;
+    float: left;
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    margin-bottom: 0;
+}
+nav ul li {
+    /* inline mas pode alterar largura,
+    altura, margens e preenchimento. */
+    display: inline-block;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    padding: 5px 10px;
+}
+
+nav ul li a:hover {
+    color:#1a631d;
+}
+
+section {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+}
+
+aside {
+    background-color: #ff9800;
+    color: #333333;
+    padding: 20px;
+    margin: 20px 0;
+    float:right;
+    width: 25%;
+}
+
+footer {
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: right;
+}
+
+ul li {
+    list-style-type: circle;
+    color: #4caf50;
+}
+
+ol li {
+    color:#4caf50;
+}
+
+pre {
+    background-color: #e0e0e0;
+    color: #333333;
+    padding: 5px 10px;
+}
+
+img {
+    display: block;
+    /* padrão é inline */
+    margin: 0 auto;
+    /* margem automática nos lados para centralizar */
+    border: 1px solid #e0e0e0;
+    max-width: 100%;
+    /* para imagem não ultrapassar a largura do conteiner */
+    height: auto;
+    /* mantém a proporção da altura ao redimensionar */
+    text-align: center;
+}
+
+figure figcaption {
+    text-align: center;
+}
+
+table {
+    border: 1px solid black;
+}
+
+table tr {
+    align-items: center;
+}
