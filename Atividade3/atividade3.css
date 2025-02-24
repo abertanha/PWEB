@@ -62,4 +62,7 @@ footer:hover {
     background-color: rgb(237, 168, 168);
 }
 
-
+.references {
+    text-align: justify;
+    background-color: rgb(204, 158, 105); 
+}
