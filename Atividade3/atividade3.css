@@ -1,0 +1,65 @@
+body {
+    background-color: rgba(107, 254, 254, 0.982);
+    color:black;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+a {
+    color: red;
+    text-decoration: underline rebeccapurple;
+}
+
+a:hover {
+    color: blueviolet;
+}
+
+header {
+    background-color: coral;
+    color: black;
+    padding: 15px 25px;
+}
+
+nav {
+    background-color: brown;
+    color: black;
+    float: center;
+    width: 100%;
+    text-align: center;
+}
+
+nav:hover {
+    background-color: black;
+    color: white;
+}
+
+section {
+    background-color: azure;
+    border: 1px salmon;
+    padding: 20px;
+}
+
+ul li {
+    list-style-type: circle;
+    color: rgb(57, 92, 57);
+
+}
+
+footer {
+    background-color:chocolate;
+    color: darkmagenta;
+    padding: 10px 20px;
+    text-align: justify;
+}
+
+footer:hover {
+    background-color: black;
+    color: white;
+}
+
+.conclusion {
+    text-align: justify;
+    background-color: rgb(237, 168, 168);
+}
+
+
