@@ -1,0 +1,89 @@
+
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-image: url(./noticias2451.jpg);
+    background-size: cover;
+    backdrop-filter: blur(8px);
+    background-repeat: no-repeat;
+}
+
+#titulo {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.card {
+    flex-basis: calc(33.333% - 20px);
+    background-color: hsl(221, 42%, 43%);
+    color: aliceblue;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2),
+                5px 5px 10px 5px hsl(221, 42%, 30%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 4px 4px 10px 4px rgba(0, 0, 0, 0.3),
+                8px 8px 15px 8px hsl(221, 42%, 30%);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.card p {
+    margin: 10px 0;
+}
+
+.card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card ul li {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+button {
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 2px rgba(255, 255, 255, 0.5);
+    border: none;
+    padding: 10px 20px;
+    background-color: hsl(221, 42%, 50%);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: hsl(221, 42%, 60%);
+}
+
+.rodape {
+    margin: 40px auto 20px;
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+}
