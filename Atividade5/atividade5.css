@@ -1,0 +1,97 @@
+body {
+	font: 150% Arial, Helvetica, sans-serif;
+}
+/* 150% do tamanho original "pai"  */
+
+
+h1 {
+	font: bold 100% Arial, Helvetica, sans-serif;
+}
+
+h2::before {
+    content: "Essa é a cor neutra";
+}
+.container{
+    width: 500px;
+    height: 500px;
+}
+
+#rodape {
+	clear: both;
+    border: solid 2px brown;
+}
+
+/* Media queries*/
+@media screen and (max-width: 420px) {
+    .container{
+        background-color: palegoldenrod;
+    }
+    h2::before{
+        content: "Essa é a cor dourada";
+    }
+}
+
+/* 768px */
+@media screen and (min-width: 421px) and (max-width: 768px) {
+
+	.container{
+        background-color: orange;
+    }
+    h2::before{
+        content: "Essa é a cor laranja";
+    }
+}
+
+/*  1024px */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+	.container{
+        background-color: pink;
+    }
+    h2::before{
+        content: "Essa é a cor rosa";
+    }
+}
+
+/*  1080px */
+@media screen and (min-width: 1025px) and (max-width: 1080px) {
+
+	.container{
+        background-color: red;
+    }
+    h2::before{
+        content: "Essa é a cor vermelha";
+    }
+}
+/*  1366px */
+@media screen and (min-width: 1081px) and (max-width: 1366px) {
+
+	.container{
+        background-color: purple;
+    }
+    h2::before{
+        content: "Essa é a cor mais purpura";
+    }
+}
+/*  1920px */
+@media screen and (min-width: 1367px) and (max-width: 1920px) {
+
+	.container{
+        background-color: yellow;
+    }
+    h2::before{
+        content: "Essa é a cor amarela";
+    }
+}
+
+/*  9999px */
+@media screen and (min-width: 1921px) {
+
+	.container{
+        background-color: green;
+    }
+    h2::before{
+        content: "Essa é a cor verde";
+    }
+}
+

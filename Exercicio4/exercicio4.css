@@ -1,0 +1,53 @@
+body {
+    padding: 10px;
+}
+
+.container-box {
+    display: grid;
+    grid-gap: 10px; /*Espaçamento entre linhas*/
+    grid-template-columns: auto;
+    grid-template-rows:  50px 100px 150px;
+    /*3 linhas, tamanho de cada uma*/
+    
+    grid-template-areas: 
+
+    'a b c d'
+    'a e f f'
+    'a e f f';
+}
+
+.box {
+    background-color: #ff8c00;
+    border-radius: 5px;
+}
+
+.a {
+    grid-area: a;
+    text-align: center;
+    transition: 0.7s linear;
+}
+.a:hover {
+    color: white;
+    background: red;
+}
+
+.b {
+    grid-area: b;
+    text-align: justify;
+}
+.c {
+    grid-area: c;
+    text-align: justify;
+}
+.d {
+    grid-area: d;
+    text-align: justify;
+}
+.e {
+    grid-area: e;
+    text-align: justify;
+}
+.f {
+    grid-area: f;
+    text-align: justify;
+}
