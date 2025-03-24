@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usando Variaveis</title>
+    <script>
+        /* Variaveis Globais */
+        var resultado;
+        var resultado2;
+        var resultado3;
+        var resultado4;
+        var resultado5 = "Conteudo 5";
+        var resultado6 = "Conteudo 6";
+
+        resultado = prompt("Qual é o seu nome?");
+        var teste = function() {
+            var resultado6;
+
+            resultado5;
+
+            resultado7 = "dentro da função";
+
+            resultado3 = "mudei dentro da função";
+
+            resultado5 = "Conteúdo 5 na função";
+            
+            return "resultado da função";
+        }
+
+        resultado4 = teste();
+
+        resultado7 = "fora da função";
+
+        alert(`resultado=${resultado} \nresultado2=${resultado2} \nresultado3=${resultado3}
+         \nresultado4=${resultado4} \nresultado5=${resultado5} \nresultado6=${resultado6}
+         \nresultado7=${resultado7}`);
+
+         if(true){
+            var teste = "conteudo de teste";
+            let teste1 = "conteudo de teste1";
+            alert(`dentro do bloco ${teste} \ndentro do bloco ${teste1}`);
+         }
+         alert(`fora do bloco ${teste} \nfora do bloco ${teste1}`);
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
