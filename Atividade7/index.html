@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets.css">
     <title>Atividade 7</title>
 </head>
 
@@ -13,13 +14,14 @@
         <h2>Escolha seu movimento!</h2>
         <select id="values" onchange="game()">
             <option value="" selected disabled hidden></option>
-            <option value="papel">Papel</option>
-            <option value="pedra">Pedra</option>
-            <option value="tesoura">Tesoura</option>
+            <option value="Papel">Papel</option>
+            <option value="Pedra">Pedra</option>
+            <option value="Tesoura">Tesoura</option>
         </select>
     </div>
     <div>
-        <h2>A Máquina escolheu: </h2>
+        <h2>Você escolheu: <span id="player-choice"></span></h2>
+        <h2>A Máquina escolheu: <span id="computer-choice"></span></h2>
     </div>
 </body>
 <script src="main.js"></script>
