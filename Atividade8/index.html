@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 8 - Pesquisa</title>
+</head>
+
+<body>
+    <h1>PESQUISA FILME XYZ</h1>
+    <form id="pesquisa" action="" autocomplete="on">
+        <label for="idade">Idade:</label>
+        <input type="text" id="idade" name="idade" required>
+        <label for="sexo">Sexo: </label>
+        <select id="sexo" name="sexo">
+            <option value="" selected disabled hidden></option>
+            <option value="m">Masculino</option>
+            <option value="f">Feminino</option>
+        </select>
+        <label for="opiniao">Opinião:</label>
+        <select id="opiniao" name="opiniao">
+            <option value="" selected disabled hidden></option>
+            <option value="4">Otimo</option>
+            <option value="3">Bom</option>
+            <option value="2">Regular</option>
+            <option value="1">Péssimo</option>
+        </select>
+        <button type="submit" class="btn btn-hero" id="btnEnviar">
+            Enviar
+        </button>
+        <button class="btn btn-hero" id="btnLimpar">Limpar</button>
+        <h2>Estatisticas:</h2>
+        <label for="avg">Média de idades:</label>
+        <p id="avg" name="avg"></p>
+        <label for="older">Mais velha: </label>
+        <p id="older" name="older"></p>
+        <label for="younger">Mais nova: </label>
+        <p id="younger" name="younger"></p>
+        <label for="worse">Qtdes de pessimo: </label>
+        <p id="worse" name="worse"></p>
+        <label for="goodgreat">% de bons e ótimos: </label>
+        <p id="goodgreat" name="goodgreat"></p>
+    </form>
+
+</body>
+<script src="main.js"></script>
+
+</html>
