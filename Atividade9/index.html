@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 9 - Quatro Funções</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quatro Funções</h1>
+        <form id="functions" autocomplete="on">
+            
+            <!-- Função 1: Maior número -->
+            <div class="funcao">
+                <h2>1. Encontrar o maior número</h2>
+                <div class="input-group">
+                    <input type="number" class="num-input" id="num1_1" placeholder="Número 1" required>
+                    <input type="number" class="num-input" id="num1_2" placeholder="Número 2" required>
+                    <input type="number" class="num-input" id="num1_3" placeholder="Número 3" required>
+                </div>
+                <button type="button" class="btn btn-hero" id="btnEnviar1">Calcular</button>
+                <button type="reset" class="btn btn-hero btn-limpar">Limpar</button>
+                <p class="resultado" id="resultMaior"></p>
+            </div>
+
+            <!-- Função 2: Ordenar números -->
+            <div class="funcao">
+                <h2>2. Ordenar números</h2>
+                <div class="input-group">
+                    <input type="number" class="num-input" id="num2_1" placeholder="Número 1" required>
+                    <input type="number" class="num-input" id="num2_2" placeholder="Número 2" required>
+                    <input type="number" class="num-input" id="num2_3" placeholder="Número 3" required>
+                </div>
+                <button type="button" class="btn btn-hero" id="btnEnviar2">Ordenar</button>
+                <button type="reset" class="btn btn-hero btn-limpar">Limpar</button>
+                <p class="resultado" id="resultCrescente"></p>
+            </div>
+
+            <!-- Função 3: Palíndromo -->
+            <div class="funcao">
+                <h2>3. Verificar palíndromo</h2>
+                <input type="text" id="palindromo" placeholder="Digite uma palavra" required>
+                <button type="button" class="btn btn-hero" id="btnEnviar3">Verificar</button>
+                <button type="reset" class="btn btn-hero btn-limpar">Limpar</button>
+                <p class="resultado" id="resultPalindromo"></p>
+            </div>
+
+            <!-- Função 4: Tipo de triângulo -->
+            <div class="funcao">
+                <h2>4. Identificar triângulo</h2>
+                <div class="input-group">
+                    <input type="number" class="num-input" id="tri1" placeholder="Lado 1" required>
+                    <input type="number" class="num-input" id="tri2" placeholder="Lado 2" required>
+                    <input type="number" class="num-input" id="tri3" placeholder="Lado 3" required>
+                </div>
+                <button type="button" class="btn btn-hero" id="btnEnviar4">Identificar</button>
+                <button type="reset" class="btn btn-hero btn-limpar">Limpar</button>
+                <p class="resultado" id="resultTriangulo"></p>
+            </div>
+    </form>
+</div>
+<script src="main.js"></script>
+</body>
+</html>
