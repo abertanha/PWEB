@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 12</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Conta corrente</h1>
+        <form id="functions" autocomplete="on">
+            
+            <!-- retangulo -->
+            <div class="funcao">
+                <h2>1. Retangulo</h2>
+                <div class="input-group">
+                    <input type="number" class="num-input" id="num1" placeholder="base" required>
+                    <input type="number" class="num-input" id="num2" placeholder="altura" required>
+                </div>
+                <button type="button" class="btn btn-hero" id="btnEnviar0">Calcular Area</button>
+                <button type="reset" class="btn btn-hero btn-limpar">Limpar</button>
+                <p class="resultado" id="resultRetangulo"></p>
+            </div>
+            <!-- conta corrente -->
+            <div class="funcao">
+                <h2>2. Conta corrente</h2>
+                <div class="input-group">
+                    <input type="text" class="txt-input" id="str1_1" placeholder="Nome Correntista" required>
+                    <input type="text" class="txt-input" id="str1_2" placeholder="Nome Banco" required>
+                    <input type="number" class="num-input" id="num1_1" placeholder="Numero da conta" required>
+                    <input type="number" class="num-input" id="num1_2" placeholder="Saldo" required>
+                    <input type="number" class="num-input" id="num1_3" placeholder="Saldo Especial" required>
+                </div>
+                <button type="button" class="btn btn-hero" id="btnEnviar1">Enviar</button>
+                <button type="reset" class="btn btn-hero btn-limpar">Limpar</button>
+                <p class="resultado" id="resultContaCorrente"></p>
+            </div>
+
+            <!-- conta poupanca -->
+            <div class="funcao">
+                <h2>3. Conta Poupança</h2>
+                <div class="input-group">
+                    <input type="text" class="txt-input" id="txt2_1" placeholder="Nome correntista" required>
+                    <input type="text" class="txt-input" id="txt2_2" placeholder="Nome Banco" required>
+                    <input type="number" class="num-input" id="num2_1" placeholder="Numero conta" required>
+                    <input type="number" class="num-input" id="num2_2" placeholder="Saldo" required>
+                    <input type="number" class="num-input" id="num2_3" placeholder="Juros" required>
+                    <input type="date" class="num-input" id="date2_1" placeholder="Data de Vencimento" required>
+                </div>
+                <button type="button" class="btn btn-hero" id="btnEnviar2">Enviar</button>
+                <button type="reset" class="btn btn-hero btn-limpar">Limpar</button>
+                <p class="resultado" id="resultContaPoupanca"></p>
+
+    </form>
+</div>
+<script src="main.js"></script>
+</body>
+</html>
