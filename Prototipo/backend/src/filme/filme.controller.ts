@@ -1,0 +1,55 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
+import { FilmeService } from './filme.service';
+import { CreateFilmeDto, FilmeRouteParameters } from './dto/create-filme.dto';
+import { UpdateFilmeDto } from './dto/update-filme.dto';
+import { Filme } from './entities/filme.entity';
+
+@Controller('filme')
+export class FilmeController {
+  constructor(private readonly filmeService: FilmeService) {}
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createFilmeDto: CreateFilmeDto): Promise<Filme> {
+    return this.filmeService.create(createFilmeDto);
+  }
+
+  @Get()
+  async findAll(): Promise<Filme[]> {
+    return this.filmeService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param() params: FilmeRouteParameters): Promise<Filme> {
+    return this.filmeService.findOne(params.id);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param() params: FilmeRouteParameters,
+    @Body() dadosAtualizar: UpdateFilmeDto,
+  ) {
+    return this.filmeService.update(params.id, dadosAtualizar);
+  }
+
+  @Delete(':id')
+  async remove(@Param() params: FilmeRouteParameters): Promise<void> {
+    return this.filmeService.remove(params.id);
+  }
+
+  @Get()
+  async searchByTitle(@Query('q') titulo: string): Promise<Filme[]> {
+    return this.filmeService.searchByTitle(titulo);
+  }
+}
