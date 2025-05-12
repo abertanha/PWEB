@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 15</title>
+</head>
+
+<body>
+    <h1>Formulário Principal</h1>
+    <div class="funcao">
+        <form id="a15" autocomplete="on">
+            <div class="input-group">
+                <input type="text" class="name-input" id="name" placeholder="Nome" required>
+                <input type="email" class="email-input" id="email" placeholder="e-mail" required>
+                <input type="text" class="comment" id="comment"
+                    placeholder="Digite um comentário de 30 caracteres" required>
+            </div>
+            <div>
+                <h1>Pesquisa</h1>
+                <p>Primeira vez nesta página?</p>
+                <label><input type="radio" name="transform" id="btnYes" value="sim">Sim</label>
+                <label><input type="radio" name="transform" id="btnNo" value="nao">Não</label>
+            </div>
+            <button type="button" class="btn btn-hero" id="submit">Enviar</button>
+            <button type="reset" class="btn btn-hero btn-limpar" id="clear">Limpar</button>
+            <p class="resultado" id="resultado"></p>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
