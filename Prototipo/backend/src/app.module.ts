@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FilmeModule } from './filme/filme.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -12,6 +13,10 @@ import { FilmeModule } from './filme/filme.module';
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true, //true para dev, false para prod
       logging: true,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
     }),
     FilmeModule,
   ],
