@@ -57,3 +57,35 @@ export class FilmeRouteParameters {
   @IsUUID()
   id!: string;
 }
+export interface Filme {
+  id: string;
+  title: string;
+  original_title: string;
+  release_date: string;
+  poster_path: string | null;
+  overview: string;
+  popularity: number;
+}
+
+export interface FilmeApiResponse {
+  data: {
+    results: Filme[];
+  };
+}
+export interface CastMember {
+  name: string;
+  popularity: number;
+}
+
+export interface CrewMember {
+  name: string;
+  known_for_department: string;
+  popularity: number;
+}
+
+export interface CreditsApiResponse {
+  data: {
+    cast: CastMember[];
+    crew: CrewMember[];
+  };
+}

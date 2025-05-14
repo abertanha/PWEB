@@ -29,13 +29,24 @@ export class FilmeController {
   async findAll(): Promise<Filme[]> {
     return this.filmeService.findAll();
   }
-
-  @Get(':id')
+  @Get('/details/:id')
+  async searchForDetailsApi(@Param('id') idExterno: string) {
+    return this.filmeService.searchForDetailsApi(idExterno);
+  }
+  @Get('/tmdb/movie')
+  async searchByTitleApi(@Query('titulo') titulo: string) {
+    return this.filmeService.searchByTitleApi(titulo);
+  }
+  @Get('/:id')
   async findOne(@Param() params: FilmeRouteParameters): Promise<Filme> {
     return this.filmeService.findOne(params.id);
   }
+  @Get()
+  async searchByTitle(@Query('q') titulo: string): Promise<Filme[]> {
+    return this.filmeService.searchByTitle(titulo);
+  }
 
-  @Patch(':id')
+  @Patch('/:id')
   async update(
     @Param() params: FilmeRouteParameters,
     @Body() dadosAtualizar: UpdateFilmeDto,
@@ -43,13 +54,8 @@ export class FilmeController {
     return this.filmeService.update(params.id, dadosAtualizar);
   }
 
-  @Delete(':id')
+  @Delete('/:id')
   async remove(@Param() params: FilmeRouteParameters): Promise<void> {
     return this.filmeService.remove(params.id);
-  }
-
-  @Get()
-  async searchByTitle(@Query('q') titulo: string): Promise<Filme[]> {
-    return this.filmeService.searchByTitle(titulo);
   }
 }
