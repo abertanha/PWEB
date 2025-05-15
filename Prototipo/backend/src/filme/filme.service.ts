@@ -1,10 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import {
-  CastMember,
-  CreateFilmeDto,
-  CreditsApiResponse,
+  TMDBCreditsResponse,
+  TMDBMovie,
+  TMDBMovieDetailsResponse,
+} from './interfaces/tmdb.interfaces';
+import {
+  FilmeDetalhado,
   FilmeApiResponse,
-} from './dto/create-filme.dto';
+} from './interfaces/filme.interfaces.js';
+import { CreateFilmeDto } from './dto/create-filme.dto';
 import { UpdateFilmeDto } from './dto/update-filme.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -63,34 +67,60 @@ export class FilmeService {
     }
   }
   async searchByTitleApi(query: string): Promise<FilmeApiResponse> {
+    // url para chamada da api
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&query=${encodeURIComponent(query)}&language=pt-BR&page=1`;
 
-    const apiResponse = await firstValueFrom(this.httpService.get(url));
-
-    const results = (apiResponse as FilmeApiResponse).data.results
-      .map((filme) => ({
-        id: filme.id,
-        title: filme.title,
-        original_title: filme.original_title,
-        release_date: filme.release_date.split('-')[0],
-        poster_path: filme.poster_path
-          ? `https://image.tmdb.org/t/p/w92${filme.poster_path}`
-          : null,
-        overview: filme.overview,
-        popularity: filme.popularity,
-      }))
-      .sort((a, b) => b.popularity - a.popularity);
-
-    return { data: { results } };
-  }
-  async searchForDetailsApi(movieId: string) {
-    const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${this.API_KEY}&language=pt-BR`;
-
-    const apiResponse: CreditsApiResponse = await firstValueFrom(
-      this.httpService.get(url),
+    const apiResponse = await firstValueFrom(
+      this.httpService.get<{ results: TMDBMovie[] }>(url),
     );
 
-    const topActors: CastMember[] = apiResponse.data.cast
+    const filmeCompleto = await Promise.all(
+      apiResponse.data.results.map(async (filme) => {
+        const { genres, runtime } = await this.getMovieGenresAndRunTime(
+          filme.id.toString(),
+        );
+        const { actors, directors } = await this.searchForDetailsApi(
+          filme.id.toString(),
+        );
+
+        return {
+          titulo: filme.title,
+          diretor: directors.map((d) => d.name).join(', '),
+          ano: filme.release_date?.split('-')[0] || 'N/A',
+          genero: genres.join(', '),
+          duracao: `${runtime} minutos`,
+          elenco: actors
+            .slice(0, 3)
+            .map((a) => a.name)
+            .join(', '),
+          sinopse: filme.overview,
+          classificacao: filme.adult ? 'Adulto' : '16 ou menos',
+          popularidade: filme.popularity,
+        } as FilmeDetalhado;
+      }),
+    );
+    const resultadosOrdenados = filmeCompleto.sort(
+      (a, b) => b.popularidade - a.popularidade,
+    );
+    return { data: { results: resultadosOrdenados } };
+  }
+
+  async searchByTitle(titulo: string): Promise<Filme[]> {
+    return this.filmeRepository
+      .createQueryBuilder('filme')
+      .where('LOWER(filme.titulo) LIKE LOWER(:titulo)', {
+        titulo: `%${titulo}%`,
+      })
+      .getMany();
+  }
+  private async searchForDetailsApi(movieId: string) {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${this.API_KEY}&language=pt-BR`;
+
+    const apiResponse = await firstValueFrom(
+      this.httpService.get<TMDBCreditsResponse>(url),
+    );
+
+    const topActors = apiResponse.data.cast
       .sort((a, b) => b.popularity - a.popularity)
       .slice(0, 3)
       .map((person) => ({
@@ -108,12 +138,17 @@ export class FilmeService {
 
     return { actors: topActors, directors: directors };
   }
-  async searchByTitle(titulo: string): Promise<Filme[]> {
-    return this.filmeRepository
-      .createQueryBuilder('filme')
-      .where('LOWER(filme.titulo) LIKE LOWER(:titulo)', {
-        titulo: `%${titulo}%`,
-      })
-      .getMany();
+  private async getMovieGenresAndRunTime(
+    movieId: string,
+  ): Promise<{ genres: string[]; runtime: number }> {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${this.API_KEY}&language=pt-BR`;
+    const apiResponse = await firstValueFrom(
+      this.httpService.get<TMDBMovieDetailsResponse>(url),
+    );
+
+    const genres = apiResponse.data.genres.map((genre) => genre.name);
+    const runtime = apiResponse.data.runtime;
+
+    return { genres, runtime };
   }
 }

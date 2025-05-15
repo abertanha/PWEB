@@ -11,7 +11,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { FilmeService } from './filme.service';
-import { CreateFilmeDto, FilmeRouteParameters } from './dto/create-filme.dto';
+import { CreateFilmeDto } from './dto/create-filme.dto';
+import { FilmeRouteParameters } from './interfaces/filme.interfaces';
 import { UpdateFilmeDto } from './dto/update-filme.dto';
 import { Filme } from './entities/filme.entity';
 
@@ -28,10 +29,6 @@ export class FilmeController {
   @Get()
   async findAll(): Promise<Filme[]> {
     return this.filmeService.findAll();
-  }
-  @Get('/details/:id')
-  async searchForDetailsApi(@Param('id') idExterno: string) {
-    return this.filmeService.searchForDetailsApi(idExterno);
   }
   @Get('/tmdb/movie')
   async searchByTitleApi(@Query('titulo') titulo: string) {
