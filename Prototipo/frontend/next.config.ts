@@ -5,7 +5,10 @@ const nextConfig: NextConfig = {
 };
 module.exports = {
   images: {
-    remotePatterns: [new URL("https://www.themoviedb.org/t/p/**")],
+    remotePatterns: [
+      new URL("https://www.themoviedb.org/t/p/**"),
+      new URL("https://media.themoviedb.org/t/p/**"),
+    ],
   },
 };
 
