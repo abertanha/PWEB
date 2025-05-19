@@ -21,14 +21,14 @@ export default function MovieDetailsModal({
         return null;
     }
 
-    const modalBgClass = 'bg-neutral-900/80';
-    const modalSolidBgForGradient = 'bg-neutral-900';
+    const modalOverallBgWithOpacity = 'bg-neutral-900/85';
+    const modalContentSolidBg = 'bg-neutral-900';
 
     return (
         <BaseModal isOpen={isOpen} onClose={onClose}>
             <div className={`
                 relative
-                ${modalBgClass}
+                ${modalOverallBgWithOpacity}
                 backdrop-filter backdrop-blur-md
                 w-11/12 md:w-3/4 lg:w-[700px] xl:w-[800px] 2xl:w-[900px]
                 max-h-[90vh]
@@ -41,7 +41,18 @@ export default function MovieDetailsModal({
             >
                 <button
                     onClick={onClose}
-                    className="absolute top-3 left-3 sm:top-4 sm:left-4 p-2 bg-black/40 rounded-full hover:bg-white/20 transition-colors z-30"
+                    className="
+                        absolute
+                        top-3
+                        left-3
+                        sm:top-4
+                        sm:left-4
+                        p-2
+                        bg-black/40
+                        rounded-full
+                        hover:bg-white/20
+                        transition-colors
+                        z-30"
                     aria-label="Voltar e fechar modal"
                     title='Voltar'
                 >
@@ -59,17 +70,44 @@ export default function MovieDetailsModal({
                                     priority
                                 />
                             )}
-                            <div className={`absolute inset-0 bg-gradient-to-l md:bg-gradient-to-r from-transparent via-<span class="math-inline">\{modalSolidBgForGradient\}/0 to\-</span>{modalSolidBgForGradient}/100 md:from-<span class="math-inline">\{modalSolidBgForGradient\}/100 md\:via\-</span>{modalSolidBgForGradient}/0 md:to-transparent pointer-events-none`}></div>
-                            <div className={`absolute inset-y-0 right-0 w-1/3 md:w-1/2 bg-gradient-to-r from-transparent to-neutral-900 pointer-events-none`}></div>
+                            {/* Degradê para MOBILE (imagem em cima, texto embaixo) */}
+                            <div
+                                className="
+                                    absolute
+                                    inset-x-0
+                                    bottom-0
+                                    h-1/2
+                                    bg-gradient-to-t
+                                    from-neutral-900
+                                    via-neutral-900/70
+                                    to-transparent
+                                    pointer-events-none
+                                    md:hidden"
+                            ></div>
+
+                            {/* Degradê para DESKTOP (imagem à esquerda, texto à direita) */}
+                            <div
+                                className="absolute
+                                    inset-y-0
+                                    right-0
+                                    w-1/2
+                                    bg-gradient-to-r
+                                    from-transparent
+                                    via-neutral-900/20
+                                    to-neutral-900
+                                    pointer-events-none
+                                    hidden
+                                    md:block"
+                            ></div>
                         </div>
-                        <div className='p-6 sm:p-8 bg-neutral-900'>
-                            <h2 className='text-2xl sm:text-3xl font-bold mb-1 sm:mb-2 leading-tight'>
+                        <div className={`p-6 sm:p-8 ${modalContentSolidBg}`}>
+                            <h2 className='text-2xl sm:text-3xl font-bold mb-1 sm:mb-2 leading-tight pt-6 md:pt-0'>
                                 {movie.titulo}
                             </h2>
                             <p className="text-sm text-neutral-400 mb-4">
                                 {movie.ano && <span>{movie.ano}</span>}
-                                {movie.duracao && <span> &bull; {movie.duracao} min</span>}
-                                {movie.classificacao && <span> &bull; {movie.classificacao}</span>}
+                                {movie.duracao && <span className="ml-2">&bull; {movie.duracao} min</span>}
+                                {movie.classificacao && <span className="ml-2">&bull; {movie.classificacao}</span>}
                             </p>
 
                             {movie.sinopse && (
@@ -79,12 +117,12 @@ export default function MovieDetailsModal({
                                 </div>
                             )}
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                                {movie.diretor && <div><strong className="font-semibold text-neutral-200">Diretor:</strong> <span className="text-neutral-300">{movie.diretor}</span></div>}
-                                {movie.genero && <div><strong className="font-semibold text-neutral-200">Gênero:</strong> <span className="text-neutral-300">{movie.genero}</span></div>}
-                                {movie.elenco && <div className="sm:col-span-2"><strong className="font-semibold text-neutral-200">Elenco:</strong> <span className="text-neutral-300">{movie.elenco}</span></div>}
-                                {movie.notaUsuario && <div><strong className="font-semibold text-neutral-200">Sua Nota:</strong> <span className="text-neutral-300">{movie.notaUsuario}/5</span></div>}
-                                {movie.dataAdicao && <div><strong className="font-semibold text-neutral-200">Adicionado em:</strong> <span className="text-neutral-300">{new Date(movie.dataAdicao).toLocaleDateString('pt-BR')}</span></div>}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm mt-4">
+                                {movie.diretor && <div><strong className="font-semibold text-neutral-200 block mb-0.5">Diretor:</strong> <span className="text-neutral-300">{movie.diretor}</span></div>}
+                                {movie.genero && <div><strong className="font-semibold text-neutral-200 block mb-0.5">Gênero:</strong> <span className="text-neutral-300">{movie.genero}</span></div>}
+                                {movie.elenco && <div className="sm:col-span-2"><strong className="font-semibold text-neutral-200 block mb-0.5">Elenco:</strong> <span className="text-neutral-300">{movie.elenco}</span></div>}
+                                {movie.notaUsuario && <div><strong className="font-semibold text-neutral-200 block mb-0.5">Sua Nota:</strong> <span className="text-neutral-300">{movie.notaUsuario}/5</span></div>}
+                                {movie.dataAdicao && <div><strong className="font-semibold text-neutral-200 block mb-0.5">Adicionado em:</strong> <span className="text-neutral-300">{new Date(movie.dataAdicao + 'T00:00:00').toLocaleDateString('pt-BR')}</span></div>}
                             </div>    
                         </div>
                     </div>
