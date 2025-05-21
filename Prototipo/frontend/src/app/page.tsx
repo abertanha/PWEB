@@ -18,8 +18,8 @@ export default function MenuPage() {
         {/* Contêiner para os botões do menu */}
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
           {/* Botão para Consultar Coleção */}
-          <Link href="/colecao" legacyBehavior>
-            <a
+          <Link 
+            href="/colecao"
               className="
                 group relative
                 flex flex-col items-center justify-center
@@ -36,14 +36,10 @@ export default function MenuPage() {
             >
               <FilmIcon className="w-16 h-16 sm:w-20 sm:h-20 mb-3 text-sky-400 group-hover:text-sky-300 transition-colors" />
               <span className="font-semibold text-lg">Consultar Coleção</span>
-              {/* Tooltip mais estilizado (opcional, requer mais CSS/JS) ou confie no 'title' */}
-            </a>
           </Link>
-
-          {/* Botão para Cadastrar Novo Filme */}
-          <Link href="/cadastrar" legacyBehavior>
-            {/* A rota /cadastrar ainda não existe, criaremos depois */}
-            <a
+        
+          <Link 
+            href="/cadastrar" 
               className="
                 group relative
                 flex flex-col items-center justify-center
@@ -60,7 +56,6 @@ export default function MenuPage() {
             >
               <PlusCircleIcon className="w-16 h-16 sm:w-20 sm:h-20 mb-3 text-green-400 group-hover:text-green-300 transition-colors" />
               <span className="font-semibold text-lg">Cadastrar Novo</span>
-            </a>
           </Link>
         </div>
         </ContentContainer>
