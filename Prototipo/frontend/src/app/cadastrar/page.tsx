@@ -9,6 +9,7 @@ import { FilmeData } from '@/types/filme.types';
 import { FilmeDetalhado } from '@/types/filme.types';
 import debounce from 'lodash.debounce';
 import { useCallback } from 'react';
+import MovieForm, { MovieFormDataType, MovieFormErrors} from '@/components/MovieForm';
 
 type NewMovieFormData = Omit<FilmeData, 'id' | 'dataAdicao' | 'posterUrl' | 'backdropUrl' | 'popularidade'>;
 
@@ -29,6 +30,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 299536,
       titulo: 'Vingadores: Ultimato',
       ano: '2019',
+      diretor: 'Adam Sandler',
       popularidade: 300,
       genero: 'Ação, Aventura, Ficção Científica',
       duracao: '181 min',
@@ -40,6 +42,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 157336,
       titulo: 'Interestelar',
       ano: '2014',
+      diretor: 'Adam Sandler',
       popularidade: 290,
       genero: 'Aventura, Drama, Ficção Científica',
       duracao: '169 min',
@@ -51,6 +54,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 27205,
       titulo: 'A Origem',
       ano: '2010',
+      diretor: 'Adam Sandler',
       popularidade: 280,
       genero: 'Ação, Ficção Científica, Aventura',
       duracao: '148 min',
@@ -62,6 +66,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 155,
       titulo: 'Batman: O Cavaleiro das Trevas',
       ano: '2008',
+      diretor: 'Adam Sandler',
       popularidade: 270,
       genero: 'Ação, Crime, Drama',
       duracao: '152 min',
@@ -73,6 +78,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 680,
       titulo: 'Pulp Fiction: Tempo de Violência',
       ano: '1994',
+      diretor: 'Adam Sandler',
       popularidade: 260,
       genero: 'Crime, Drama',
       duracao: '154 min',
@@ -84,6 +90,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 120,
       titulo: 'O Senhor dos Anéis: O Retorno do Rei',
       ano: '2003',
+      diretor: 'Adam Sandler',
       popularidade: 250,
       genero: 'Aventura, Fantasia, Ação',
       duracao: '201 min',
@@ -95,6 +102,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 76341,
       titulo: 'Mad Max: Estrada da Fúria',
       ano: '2015',
+      diretor: 'Adam Sandler',
       popularidade: 240,
       genero: 'Ação, Aventura, Ficção Científica',
       duracao: '120 min',
@@ -106,6 +114,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 238,
       titulo: 'O Poderoso Chefão',
       ano: '1972',
+      diretor: 'Adam Sandler',
       popularidade: 230,
       genero: 'Crime, Drama',
       duracao: '175 min',
@@ -117,6 +126,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 497,
       titulo: 'O Resgate do Soldado Ryan',
       ano: '1998',
+      diretor: 'Adam Sandler',
       popularidade: 225,
       genero: 'Drama, Guerra',
       duracao: '169 min',
@@ -128,6 +138,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 424,
       titulo: 'A Lista de Schindler',
       ano: '1993',
+      diretor: 'Adam Sandler',
       popularidade: 220,
       genero: 'Drama, História, Guerra',
       duracao: '195 min',
@@ -139,6 +150,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 122,
       titulo: 'O Senhor dos Anéis: A Sociedade do Anel',
       ano: '2001',
+      diretor: 'Adam Sandler',
       popularidade: 215,
       genero: 'Aventura, Fantasia, Ação',
       duracao: '178 min',
@@ -150,6 +162,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 13,
       titulo: 'Forrest Gump: O Contador de Histórias',
       ano: '1994',
+      diretor: 'Adam Sandler',
       popularidade: 210,
       genero: 'Drama, Romance',
       duracao: '142 min',
@@ -161,6 +174,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 603,
       titulo: 'Matrix',
       ano: '1999',
+      diretor: 'Adam Sandler',
       popularidade: 205,
       genero: 'Ação, Ficção Científica',
       duracao: '136 min',
@@ -172,6 +186,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 1891,
       titulo: 'O Curioso Caso de Benjamin Button',
       ano: '2008',
+      diretor: 'Adam Sandler',
       popularidade: 200,
       genero: 'Drama, Fantasia, Romance',
       duracao: '166 min',
@@ -183,6 +198,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 550,
       titulo: 'Clube da Luta',
       ano: '1999',
+      diretor: 'Adam Sandler',
       popularidade: 195,
       genero: 'Drama',
       duracao: '139 min',
@@ -194,6 +210,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 272,
       titulo: 'Batman Begins',
       ano: '2005',
+      diretor: 'Adam Sandler',
       popularidade: 190,
       genero: 'Ação, Crime, Drama',
       duracao: '140 min',
@@ -205,6 +222,7 @@ const todosOsFilmesMockadosParaBusca: FilmeDetalhado[] = [
       id: 68718,
       titulo: 'Django Livre',
       ano: '2012',
+      diretor: 'Adam Sandler',
       popularidade: 185,
       genero: 'Drama, Faroeste',
       duracao: '165 min',
@@ -221,13 +239,33 @@ export default function CadastrarPage() {
     const [sugestoes, setSugestoes] = useState<FilmeDetalhado[]>([]);
     const [mostrarSugestoes, setMostrarSugestoes] = useState(false);
     const [loadingSugestoes, setLoadingSugestoes] = useState(false); 
-
+    const suggestionsContainerRef = useRef<HTMLDivElement>(null);
+    const [errors, setErrors] = useState<MovieFormErrors>({});
+    const { titulo, ...formDataSemTitulo } = formData; // Separa o título
 
     useEffect(() => {
-        titleInputRef.current?.focus();
+      titleInputRef.current?.focus();
     }, []);
+    
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          mostrarSugestoes &&
+          suggestionsContainerRef.current &&
+          !suggestionsContainerRef.current.contains(event.target as Node)
+        ) {
+          setMostrarSugestoes(false);
+        }
+      };
+      if (mostrarSugestoes) {
+        document.addEventListener('mousedown', handleClickOutside);
+      }
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [mostrarSugestoes]);
 
-    const handleInputChange = (
+    const handleBaseInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         const { name, value } = e.target;
@@ -235,94 +273,110 @@ export default function CadastrarPage() {
         const targetInput = e.target as HTMLInputElement;
 
         if (targetInput.type === 'number') {
-        processedValue = value === '' ? undefined : parseFloat(value);
-        if (isNaN(processedValue as number)) {
-            processedValue = undefined;
-        }
+          processedValue = value === '' ? undefined : parseFloat(value);
+          if (isNaN(processedValue as number)) {
+              processedValue = undefined;
+          }
         }
         setFormData(prev => ({ ...prev, [name]: processedValue }));
     };
 
-    const handleTitleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTitleInputChangeAndSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newTitle = e.target.value;
         setFormData(prev => ({ ...prev!, titulo: newTitle }));
-        // Chama a função debounced para buscar sugestões
-        debouncedFetchSuggestions(newTitle);
-    };
-
-    const handleTitleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.target.setCustomValidity('');
-        handleInputChange(e);
+        if (errors.titulo) {
+          setErrors(prev => ({...prev, titulo: undefined}));
+        }
+        if (newTitle.length >= 4) { 
+          setMostrarSugestoes(true); 
+          debouncedFetchSuggestions(newTitle);
+        } else {
+          setMostrarSugestoes(false);
+          setSugestoes([]);
+        }
     };
     
-    const handleTitleInvalid = (e: React.InvalidEvent<HTMLInputElement>) => {
+    const handleTitleInputInvalid = (e: React.InvalidEvent<HTMLInputElement>) => {
         e.target.setCustomValidity('Por favor, informe o título do filme.');
+    };
+    const handleTitleInputForValidity = (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.target.setCustomValidity(''); // Limpa validade customizada
     };
     
     const handleClearForm = () => {
-        setFormData(initialFormData);
-        titleInputRef.current?.focus();
+      setFormData(initialFormData);
+      setSugestoes([]);
+      setMostrarSugestoes(false);
+      setErrors({});
+      titleInputRef.current?.focus();
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // TO DO backend da chamada do método searchbytitleapi()
-        console.log('Dados do formulário para salvar:', formData);
-        // TO DO depois de salvar limpar formulario com:
-        // handleClearForm();
+        if (!validate()) {
+          console.log("Formulário de cadastro inválido", errors);
+          return;
+        }
+        console.log('Dados do formulário para salvar (Cadastro):', formData)
+    };
+    
+    // Função de validação (será implementada na próxima etapa)
+    const validate = (): boolean => {
+    // Lógica de validação virá aqui.
+      setErrors({}); // Simula que não há erros por enquanto
+      return true; // Retorna true para permitir o save por enquanto
     };
 
-    const fetchSuggestionsFromMock = async (query: string): Promise<FilmeDetalhado[]> => {
-        console.log('[CadastrarPage] Buscando mock para:', query);
-        setLoadingSugestoes(true); 
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            if (!query.trim()) {
-              setLoadingSugestoes(false);
-              resolve([]);
-              return;
-            }
-            const lowerCaseQuery = query.toLowerCase();
-            const results = todosOsFilmesMockadosParaBusca.filter(filme =>
-              filme.titulo.toLowerCase().includes(lowerCaseQuery)
-            );
+    const fetchSuggestionsFromMock = useCallback(async (query: string): Promise<FilmeDetalhado[]> => {
+      console.log('[CadastrarPage] Buscando mock para:', query);
+      setLoadingSugestoes(true);
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (!query.trim()) {
             setLoadingSugestoes(false);
-            resolve(results);
-          }, 700);
-        });
-    };
+            resolve([]);
+            return;
+          }
+          const lowerCaseQuery = query.toLowerCase();
+          const results = todosOsFilmesMockadosParaBusca.filter(filme =>
+            filme.titulo.toLowerCase().includes(lowerCaseQuery)
+          );
+          setLoadingSugestoes(false);
+          resolve(results);
+        }, 700);
+      });
+    }, [])
     
     const debouncedFetchSuggestions = useCallback(
       debounce(async (query: string) => {
-          if (query.length >= 4) {  // a partir de 4 caracteres a busca pode iniciar
-            const fetchedSugestoes = await fetchSuggestionsFromMock(query);
-            setSugestoes(fetchedSugestoes);
-            setMostrarSugestoes(fetchedSugestoes.length > 0);
-          } else {
-            setSugestoes([]);
-            setMostrarSugestoes(false);
-          }
-        }, 500), // Aguarda 500ms após a última digitação para chamar a busca
-        [] 
+        if (query.length >= 3) {
+          const fetchedSugestoes = await fetchSuggestionsFromMock(query);
+          setSugestoes(fetchedSugestoes);
+          setMostrarSugestoes(true);
+        } else {
+          setSugestoes([]);
+          setMostrarSugestoes(false);
+        }
+      }, 500),
+      [fetchSuggestionsFromMock]
     );
 
     const handleSugestaoClick = (sugestao: FilmeDetalhado) => {
         console.log('Sugestão clicada:', sugestao);
-        //  TO DO Lógica para preencher o form
         setFormData(prev => ({
-          ...prev!, // Mantém o que já estava no form (ex: Sua Nota, se já digitada)
+          ...prev!, // Mantém o que já estava no form
           titulo: sugestao.titulo,
           diretor: sugestao.diretor,
           ano: sugestao.ano ? parseInt(sugestao.ano, 10) : undefined, // Converte ano string para number
           genero: sugestao.genero,
-          // Para 'duracao', você precisará extrair o número. Ex: "120 min" -> 120
+          // Para 'duracao', você precisará extrair o número.
           duracao: sugestao.duracao ? parseInt(sugestao.duracao.split(' ')[0], 10) : undefined,
           elenco: sugestao.elenco,
           classificacao: sugestao.classificacao,
           sinopse: sugestao.sinopse,
         }));
-        setMostrarSugestoes(false); // Esconde o dropdown após a seleção
-        // Poderia também limpar o array de sugestoes se quisesse: setSugestoes([]);
+        setMostrarSugestoes(false);
+        setSugestoes([]); 
       };
     
 
@@ -330,145 +384,68 @@ export default function CadastrarPage() {
     const labelBaseClass = "block mb-1.5 text-sm font-medium text-neutral-300";
     
     return (
-        <div className='flex items-center justify-center min-h-screen py-10 px-4 sm:px-0'>
-            <ContentContainer className='flex flex-col w-11/12 md:w-3/4 lg:max-w-2xl xl:max-w-3xl'>
-                <div className='mb-6 sm:mb-8 relative'>
-                    <Link 
-                        href="/" 
-                        className='
-                            absolute
-                            top-1/2
-                            -translate-y-1/2
-                            left-0
-                            p-2
-                            bg-black/20 hover:bg-white/20
-                            rounded-full
-                            transition-colors
-                            '
-                            aria-label="Voltar para o menu"
-                            title="Voltar"
+      <div className="flex items-center justify-center min-h-screen py-10 px-4 sm:px-0">
+        <ContentContainer className="flex flex-col w-11/12 md:w-3/4 lg:max-w-2xl xl:max-w-3xl">
+          <div className="mb-6 sm:mb-8 relative">
+            <Link href="/" className="absolute top-1/2 -translate-y-1/2 left-0 p-2 bg-black/20 hover:bg-white/20 rounded-full transition-colors" aria-label="Voltar para o menu principal" title="Voltar" >
+              <ArrowLeftIcon className="h-6 w-6 text-white" />
+            </Link>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white text-center italic">
+              Nova Entrada
+            </h1>
+          </div>
+
+          <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto pr-1">
+            <div className="relative mb-5" ref={suggestionsContainerRef}>
+              <label htmlFor="titulo" className={labelBaseClass}>Título:</label>
+              <input
+                  type="text"
+                  name="titulo"
+                  id="titulo"
+                  ref={titleInputRef}
+                  value={titulo}
+                  onChange={handleTitleInputChangeAndSearch}
+                  className={`${inputBaseClass} ${errors.titulo ? 'border-red-500' : 'border-neutral-700'}`}
+                  required
+                  autoComplete="off"
+                  onInvalid={handleTitleInputInvalid}
+                  onInput={handleTitleInputForValidity}
+              />
+              {errors.titulo && <p className="mt-1 text-xs text-red-400">{errors.titulo}</p>}
+
+              {loadingSugestoes && ( 
+              <div className="absolute mt-1 text-sm text-sky-400/80 text-center italic font-bold"> buscando... </div> )}
+              {!loadingSugestoes && mostrarSugestoes && sugestoes.length > 0 && (
+                <ul className="absolute top-full left-0 right-0 z-10 mt-1 bg-neutral-800 border border-neutral-700 rounded-md shadow-lg max-h-72 overflow-y-auto">
+                  {sugestoes.map((sugestao, index) => (
+                    <li
+                      key={sugestao.id || index}
+                      onClick={() => handleSugestaoClick(sugestao)}
+                      className="px-4 py-2.5 text-sm text-neutral-200 hover:bg-sky-700 hover:text-white cursor-pointer border-b border-neutral-700/50 last:border-b-0"
                     >
-                        <ArrowLeftIcon className='h-6 w-6 text-white'/>
-                    </Link>
-                    <h1 className='text-3xl sm:text-4xl font-bold text-white text-center italic'>
-                        Nova Entrada
-                    </h1>
-                </div>
-                <form onSubmit={handleSubmit} className='flex-grow space-y-5 overflow-y-auto pr-1'>
-                    <div className='relative'>
-                        <label htmlFor="titulo" className={labelBaseClass}>Título:</label>
-                        <input 
-                            type="text"
-                            name="titulo"
-                            id="titulo"
-                            ref={titleInputRef}
-                            value={formData.titulo}
-                            onChange={handleTitleInputChange}
-                            onInvalid={handleTitleInvalid}
-                            className={inputBaseClass}
-                            required
-                            placeholder='Lavoura Arcaica'
-                            autoComplete='off'
-                        />
-                        {loadingSugestoes && (
-                            <div className='absolute w-full mt-1 p-2 text-sm text-neutral-400 text-center'>
-                                Buscando
-                            </div>
-                        )}
-                        <ul
-                            className='
-                                absolute top-full left-0 right-0 z-10
-                                mt-1
-                                bg-neutral-800 border border-neutral-700
-                                rounded-md shadow-lg
-                                max-h-72 over-y-auto
-                            '
-                        >
-                            {sugestoes.map((sugestao, index) => (
-                                <li
-                                    key={sugetao.id || index}
-                                    onClick={() => handleSugestaoClick(sugestao)}
-                                    className='
-                                        px-4 py-2.5
-                                        text-sm text-neutral-200
-                                        hover:bg-sky-700 hover:text-white
-                                        cursor-pointer
-                                        border-b border-neutral-700/50 last:border-b-0    
-                                    '
-                                >
-                                    <span className='font-semibold'>{sugestao.titulo}</span>
-                                    {sugestao.ano && <span className='text-xs text-neutral-400 ml-2'>({sugestao.ano})</span>}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
-                        <div>
-                            <label htmlFor="diretor" className={labelBaseClass}>Diretor:</label>
-                            <input type="text" name='diretor' id='diretor'
-                                    value={formData.diretor} onChange={handleInputChange}
-                                    className={inputBaseClass} placeholder='Luiz Fernando Carvalho'/>
-                        </div>
-                        <div>
-                            <label htmlFor="ano" className={labelBaseClass}>Ano:</label>
-                            <input type="number" name='ano' id='ano'
-                                    value={formData.ano === undefined ? '' : formData.ano} onChange={handleInputChange}
-                                    className={inputBaseClass} placeholder="Ex: 1998"
-                                    />
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                        <label htmlFor="genero" className={labelBaseClass}>Gênero:</label>
-                        <input type="text" name="genero" id="genero"
-                                value={formData.genero} onChange={handleInputChange}
-                                className={inputBaseClass} />
-                        </div>
-                        <div>
-                        <label htmlFor="duracao" className={labelBaseClass}>Duração (minutos):</label>
-                        <input type="number" name="duracao" id="duracao"
-                                value={formData.duracao === undefined ? '' : formData.duracao} onChange={handleInputChange}
-                                className={inputBaseClass} placeholder="Ex: 163" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label htmlFor="elenco" className={labelBaseClass}>Elenco (separado por vírgulas):</label>
-                        <input type="text" name="elenco" id="elenco"
-                            value={formData.elenco} onChange={handleInputChange}
-                            className={inputBaseClass} />
-                    </div>
-
-                    <div>
-                        <label htmlFor="classificacao" className={labelBaseClass}>Classificação Etária:</label>
-                        <input type="text" name="classificacao" id="classificacao"
-                            value={formData.classificacao} onChange={handleInputChange}
-                            className={inputBaseClass} placeholder="Ex: 12 anos" />
-                    </div>
-
-                    <div>
-                        <label htmlFor="sinopse" className={labelBaseClass}>Sinopse:</label>
-                        <textarea name="sinopse" id="sinopse" rows={4}
-                                value={formData.sinopse} onChange={handleInputChange}
-                                className={inputBaseClass}></textarea>
-                    </div>
-
-                    <div>
-                        <label htmlFor="notaUsuario" className={labelBaseClass}>Sua Nota (0 a 5):</label>
-                        <input type="number" name="notaUsuario" id="notaUsuario"
-                            value={formData.notaUsuario === undefined ? '' : formData.notaUsuario} onChange={handleInputChange}
-                            className={inputBaseClass} step="0.1" min="0" max="5" placeholder="Ex: 4.7"/>
-                    </div>
-                    <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 mt-6 border-t border-neutral-700">
-                        <Button type="button" onClick={handleClearForm} variant="secondary" className="w-full sm:w-auto">
-                            Limpar Entrada
-                        </Button>
-                        <Button type="submit" variant="primary" className="w-full sm:w-auto">
-                            Salvar Entrada
-                        </Button>
-                    </div>
-                </form>
-            </ContentContainer>
-        </div>
+                      <span className="font-semibold">{sugestao.titulo}</span>
+                      {sugestao.ano && <span className="text-xs text-neutral-400 ml-2">({sugestao.ano})</span>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <MovieForm
+                formData={formDataSemTitulo as MovieFormDataType}
+                handleInputChange={handleBaseInputChange}
+                errors={errors} 
+                hideTitleField={true}
+            />
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 mt-6 border-t border-neutral-700">
+              <Button type="button" onClick={handleClearForm} variant="secondary" className="w-full sm:w-auto">
+                Limpar Entrada
+              </Button>
+              <Button type="submit" variant="primary" className="w-full sm:w-auto">
+                Salvar Entrada
+              </Button>
+            </div>
+          </form>
+        </ContentContainer>
+      </div>
     );
-}
+  }

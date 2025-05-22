@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react'
+import Link from 'next/link';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import ContentContainer from "@/components/ContentContainer";
 import SearchInput from "@/components/SearchInput";
 import MovieCard from "@/components/MovieCard";
@@ -105,7 +107,6 @@ const initialMockMovies: FilmeData[] = [
 
 export default function Home() {
   const [movies, setMovies] = useState<FilmeData[]>(initialMockMovies); // mockMovies agora é um estado!
-  //Estados para seleção do movieCard.
   const [activeMovieId, setActiveMovieId] = useState<number | string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -199,9 +200,17 @@ export default function Home() {
   return (
     <>
     <div className="flex flex-col items-center min-h-screen py-10 px-4 sm:px-0"> 
-      <ContentContainer className="flex flex-col flex-grow">
-        <div className="mb-6 sm:mb-8"> 
-          <h1 className="text-3xl font-bold text-center text-white sm:text-4xl italic">
+      <ContentContainer className="flex flex-col flex-grow w-11/12 md:w-full">
+        <div className="mb-6 sm:mb-8 relative flex items-center justify-between"> 
+          <Link 
+              href="/" 
+              className="p-2 -ml-2 sm:ml-0 rounded-full hover:bg-black/30 transition-colors" // Removido absolute, posicionado pelo flex
+              aria-label="Voltar para o menu principal" 
+              title="Voltar" 
+            >
+              <ArrowLeftIcon className="h-6 w-6 text-white" />
+          </Link>
+          <h1 className="text-3xl font-bold text-center text-white sm:text-4xl italic flex-grow px-4">
             Consultar
           </h1>
           <div className="mt-4 flex justify-end">

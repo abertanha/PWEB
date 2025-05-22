@@ -17,6 +17,7 @@ export interface FilmeData {
 
 // TO DO idem
 export interface FilmeDetalhado {
+  id: number;
   titulo: string;
   diretor: string;
   ano: string;
