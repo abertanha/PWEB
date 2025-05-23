@@ -22,17 +22,18 @@ export default function BackgroundSetter({images}: BackgroundSetterProps) {
           const randomIndex = Math.floor(Math.random() * images.length);
           const newImage = images[randomIndex];
           
-          setCurrentImage(null);
-          setIsLoaded(false);
-          setIsVisible(false);
-          setIsBlurred(false);
+          if(newImage !== currentImage || !currentImage){
+            setCurrentImage(newImage);
+            setIsLoaded(false);
+            setIsVisible(false);
+            setIsBlurred(false);
+          }
           
-          setCurrentImage(newImage);
         }
-      }, [images, hasMounted]);
+      }, [images, hasMounted, currentImage]);
 
       useEffect(() => {
-        if (currentImage && hasMounted) {
+        if (currentImage && hasMounted && !isLoaded) {
           console.log(`[BS] Preloading: ${currentImage}`);
           const img = new window.Image();
           img.src = currentImage;
@@ -45,7 +46,7 @@ export default function BackgroundSetter({images}: BackgroundSetterProps) {
             setIsLoaded(false);
           };
         }
-      }, [currentImage, hasMounted]);
+      }, [currentImage, hasMounted, isLoaded]);
 
       useEffect(() => {
         if (isLoaded && hasMounted) {
@@ -54,7 +55,7 @@ export default function BackgroundSetter({images}: BackgroundSetterProps) {
           const sharpTimer = setTimeout(() => {
             console.log('[BS] Setting isVisible = true');
             setIsVisible(true);
-          }, 100);
+          }, 500);
     
           const blurTimer = setTimeout(() => {
             console.log('[BS] Setting isBlurred = true');
@@ -65,6 +66,9 @@ export default function BackgroundSetter({images}: BackgroundSetterProps) {
             clearTimeout(sharpTimer);
             clearTimeout(blurTimer);
           };
+        } else {
+          setIsVisible(false);
+          setIsBlurred(false);
         }
       }, [isLoaded, hasMounted]);
 
