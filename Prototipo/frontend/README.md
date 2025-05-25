@@ -16,12 +16,12 @@ Para baixar e executar este projeto frontend em sua máquina local, siga os pass
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO_GIT>
+    git clone https://github.com/abertanha/PWEB.git
     ```
 2.  **Navegue até a pasta do frontend:**
 
     ```bash
-    cd frontend/
+    cd PWEB/prototipo/frontend
     ```
 3.  **Instale as dependências:**
     Certifique-se de ter o [Node.js](https://nodejs.org/) (que inclui o npm) instalado.
