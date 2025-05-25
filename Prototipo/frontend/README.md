@@ -1,36 +1,87 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Protótipo Projeto Final de PWEB
 
-First, run the development server:
+## Descrição
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Este projeto é um protótipo frontend desenvolvido como parte dos requisitos para aprovação parcial na matéria de Programação Web (PWEB) da FATEC Sorocaba.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação consiste em um diário de filmes assistidos. Nesta etapa de protótipo, o frontend foi construído utilizando React/Next.js e opera com dados mocados (simulados) para demonstração das funcionalidades da interface do usuário e navegação.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+O protótipo funcional pode ser acessado em: [[Protótipo](https://prototipo-jade.vercel.app/)]
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Como Baixar/Rodar o Projeto Localmente
 
-## Learn More
+Para baixar e executar este projeto frontend em sua máquina local, siga os passos abaixo:
 
-To learn more about Next.js, take a look at the following resources:
+1.  **Clone o repositório:**
+    ```bash
+    git clone <URL_DO_SEU_REPOSITORIO_GIT>
+    ```
+2.  **Navegue até a pasta do frontend:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    ```bash
+    cd frontend/
+    ```
+3.  **Instale as dependências:**
+    Certifique-se de ter o [Node.js](https://nodejs.org/) (que inclui o npm) instalado.
+    ```bash
+    npm install
+    ```
+    (Se você utilizar `yarn` ou `pnpm`, substitua pelo comando correspondente: `yarn install` ou `pnpm install`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4.  **Execute o servidor de desenvolvimento:**
+    ```bash
+    npm run dev
+    ```
+5.  **Abra no navegador:**
+    Abra seu navegador e acesse [http://localhost:3000](http://localhost:3000) para ver a aplicação rodando.
 
-## Deploy on Vercel
+## Funcionalidades Implementadas no Protótipo Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* **Tela de Menu Principal:**
+    * Navegação para as seções de cadastro e consulta.
+    * (Animações de entrada implementadas parcialmente).
+* **Tela de Cadastro de Novo Filme (`/cadastrar`):**
+    * Formulário para adicionar novos filmes.
+    * Foco automático no campo "Título".
+    * Autocompletar para o campo "Título" com dados mockados e dropdown de sugestões.
+    * Preenchimento automático do formulário ao selecionar uma sugestão.
+    * Botões para "Limpar Entrada" e "Salvar Entrada" (salvamento mockado).
+    * Mensagem de validação customizada para o campo título.
+* **Tela de Consulta da Coleção (`/colecao`):**
+    * Exibição da lista de filmes mockados em uma grade responsiva de cartazes.
+    * Botão para retornar ao menu principal.
+    * Campo de busca para filtrar filmes pelo título (filtrando os dados mockados).
+    * Interatividade nos cartazes de filme:
+        * Ao clicar no cartaz: efeito de blur e exibição de ícones de ação (detalhes, editar, deletar).
+        * Tooltips e cursor de "mãozinha" nos ícones de ação.
+    * **Modal de Detalhes do Filme:**
+        * Exibição das informações completas de um filme.
+        * Layout com imagem de backdrop e degradê para a área de texto.
+        * Botão para fechar o modal.
+    * **Modal de Confirmação de Deleção:**
+        * Mensagem de confirmação incluindo o título do filme.
+        * Botões "Excluir" e "Cancelar".
+        * Botão para fechar o modal.
+    * **Modal de Edição de Filme:**
+        * Formulário pré-preenchido com os dados do filme.
+        * Botões "Salvar Alterações", "Resetar Mudanças" e um botão para fechar/cancelar.
+        * (Validação detalhada dos campos do formulário de edição será implementada futuramente).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tecnologias Utilizadas (Frontend)
+
+* **TypeScript**
+* **React**
+* **Next.js** (App Router)
+* **TailwindCSS** (para estilização)
+* **Heroicons** (para iconografia)
+* `lodash.debounce` (para a funcionalidade de autocompletar)
+
+## Autor
+
+* **Adriano Bertanha**
+* **RA:** 0030482321026
+* FATEC Sorocaba - Análise e Desenvolvimento de Sistemas
+
+---
