@@ -5,6 +5,7 @@ import Image from 'next/image';
 import ContentContainer from '@/components/ContentContainer';
 
 export default function MenuPage() {
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-white p-4">
       <ContentContainer className="flex flex-col items-center text-center">
@@ -21,11 +22,11 @@ export default function MenuPage() {
             className="
               group
               flex flex-col items-center justify-center
-              p-4 {/* Padding para criar área de clique ao redor do ícone/texto */}
+              p-4 
               text-center text-white
               transition-transform duration-300 ease-in-out
-              transform hover:scale-110 {/* Aumenta um pouco mais o hover */}
-              rounded-lg {/* Opcional: um leve arredondamento na área de hover/foco */}
+              transform hover:scale-110
+              rounded-lg
               focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-transparent
             "
             title="Cadastrar novo filme"
