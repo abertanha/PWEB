@@ -9,15 +9,34 @@ interface BackgroundSetterProps {
 
 export default function BackgroundSetter({images}: BackgroundSetterProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isBlurred, setIsBlurred] = useState(false);
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   
-  const efeito = () => {
+  const efeitoOpacidade = () => {
     setIsVisible(true);
   }
 
   useEffect(() => {
-    setCurrentImage(images[Math.floor(Math.random() * images.length)]);
-  }, [])
+    const selectedImage = images[Math.floor(Math.random() * images.length)];
+    setCurrentImage(selectedImage);
+
+    // Timer para começar o blur depois de 3,5s
+    const blurTimeout = setTimeout(() => {
+      setIsBlurred(true);
+
+      // Depois de 1s de blur (total = 4,5s), dispara evento
+      const endAnimationTimeout = setTimeout(() => {
+        window.dispatchEvent(new Event('backgroundAnimationFinished'));
+      }, 1000); // 1s de blur
+
+      // Limpeza do timeout do evento
+      return () => clearTimeout(endAnimationTimeout);
+
+    }, 3500); // 3,5s de fade-in
+
+    // Limpeza do timeout de blur
+    return () => clearTimeout(blurTimeout);
+  }, []);
   
   return (
       <div className={`
@@ -35,17 +54,18 @@ export default function BackgroundSetter({images}: BackgroundSetterProps) {
           alt={'Cena de filme aleatoria'}
           fill
           className='invisible'
-          onLoad={efeito}
+          onLoad={efeitoOpacidade}
         />}
-          <div className={`
-              transition-all ease-in-out
-              duration-[500ms]
-              absolute inset-0
-              bg-cover bg-center bg-no-repeat
-              bg-blur-md
-              `}
-              style={currentImage ? { backgroundImage: `url(${currentImage})` }: {}}
-          />
+        <div className={`
+          absolute inset-0
+          bg-cover bg-center bg-no-repeat
+          ${isBlurred ? 'blur-md' : 'blur-none'}
+          `}
+          style={{
+            backgroundImage: currentImage ? `url(${currentImage})` : undefined,
+            transition: 'filter 1s ease-in-out', 
+          }}
+        />
       </div>
   );
 }

@@ -1,14 +1,41 @@
+"use client"
+
 import Link from 'next/link'; 
 import React from 'react';
 import Image from 'next/image';
-//TO DO REVER ICONES
 import ContentContainer from '@/components/ContentContainer';
+import { useEffect, useState } from 'react';
 
 export default function MenuPage() {
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    const contentAnimationPlayed = sessionStorage.getItem('contentAnimationPlayed');
+
+    if (contentAnimationPlayed) {
+      setShowContent(true);
+
+    }else{
+      
+      const handleAnimationEnd = () => {
+        setShowContent(true);
+        sessionStorage.setItem('contentAnimationPlayed','true');
+      };
+      window.addEventListener('backgroundAnimationFinished', handleAnimationEnd);
+
+      return () => window.removeEventListener('backgroundAnimationFinished', handleAnimationEnd);
+    }
+  }, []);
   
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-white p-4">
-      <ContentContainer className="flex flex-col items-center text-center">
+      <ContentContainer 
+        className={`
+          flex flex-col items-center text-center
+          transition-opacity duration-[1000ms] ease-in-out
+          ${showContent ? 'opacity-100' : 'opacity-0' }
+        `}
+        >
         <div className="mb-10 sm:mb-12">
           <h1 className="text-5xl lg:text-6xl font-bold mb-3 italic">Diário de cinéfilo</h1>
           <p className="text-lg sm:text-xl text-neutral-300 px-2">
