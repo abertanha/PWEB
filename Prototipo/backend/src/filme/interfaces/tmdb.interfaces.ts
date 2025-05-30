@@ -15,8 +15,10 @@ export interface TMDBCastMember {
 }
 
 export interface TMDBMovieDetailsResponse {
-  genres: Array<{ name: string }>;
+  genres: { id: number; name: string }[];
   runtime: number;
+  poster_path: string;
+  backdrop_path: string;
 }
 
 export interface TMDBCreditsResponse {
@@ -30,4 +32,8 @@ export interface TMDBCreditsResponse {
 export interface TMDBMovieDetails extends TMDBMovie {
   runtime: number;
   genres: Array<{ name: string }>;
+}
+export interface CreditResult {
+  directors: Array<{ name: string }>;
+  actors: Array<{ name: string; popularity: number }>;
 }
