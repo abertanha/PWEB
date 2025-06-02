@@ -1,0 +1,27 @@
+{
+  "name": "site_fatec",
+  "version": "1.0.0",
+  "description": "Site da Fatec Sorocaba",
+  "main": "testeObjeto.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abertanha/PWEB.git"
+  },
+  "author": "Adriano Bertnaha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abertanha/PWEB/issues"
+  },
+  "homepage": "https://github.com/abertanha/PWEB#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
