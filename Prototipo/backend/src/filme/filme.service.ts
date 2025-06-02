@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import {
+  CreditResult,
   TMDBCreditsResponse,
   TMDBMovie,
   TMDBMovieDetailsResponse,
@@ -7,6 +8,7 @@ import {
 import {
   FilmeDetalhado,
   FilmeApiResponse,
+  FilmeDetails,
 } from './interfaces/filme.interfaces.js';
 import { CreateFilmeDto } from './dto/create-filme.dto';
 import { UpdateFilmeDto } from './dto/update-filme.dto';
@@ -27,6 +29,13 @@ export class FilmeService {
     private readonly httpService: HttpService,
   ) {
     this.API_KEY = this.configService.get<string>('API_KEY');
+    if (!this.API_KEY) {
+      console.error('API_KEY do TMDB não foi encontrada!');
+      throw new HttpException(
+        'TMDB API Key não encontrada',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async create(createFilmeDto: CreateFilmeDto): Promise<Filme> {
@@ -59,48 +68,77 @@ export class FilmeService {
   async remove(id: string): Promise<void> {
     const result = await this.filmeRepository.delete(id);
 
-    if (!result.affected) {
+    if (result.affected === 0) {
       throw new HttpException(
         `Filme com id ${id} não encontrado`,
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.NOT_FOUND,
       );
     }
   }
   async searchByTitleApi(query: string): Promise<FilmeApiResponse> {
     // url para chamada da api
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&query=${encodeURIComponent(query)}&language=pt-BR&page=1`;
+    const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/'; // TO DO REVER ESSAS TRES CONSTANTES
+    const POSTER_SIZE = 'w500';
+    const BACKDROP_SIZE = 'w1280';
 
-    const apiResponse = await firstValueFrom(
-      this.httpService.get<{ results: TMDBMovie[] }>(url),
-    );
+    let apiResponse: { data: { results: TMDBMovie[] } };
+    try {
+      apiResponse = await firstValueFrom(
+        this.httpService.get<{ results: TMDBMovie[] }>(url),
+      );
+    } catch (error) {
+      console.error(
+        `Erro ao buscar filmes no TMDB (query: ${query}):`,
+        error.response?.data || error.message,
+      );
+      throw new HttpException(
+        `Falha ao buscar filmes no TMDB`,
+        HttpStatus.FAILED_DEPENDENCY,
+      );
+    }
+    const filmesDetalhadosPromises: Promise<FilmeDetalhado | null>[] =
+      apiResponse.data.results.slice(0, 10).map(async (filme: TMDBMovie) => {
+        const [details, credits]: [FilmeDetails, CreditResult] =
+          await Promise.all([
+            this.getMovieDetails(filme.id.toString()),
+            this.searchForDetailsApi(filme.id.toString()),
+          ]);
 
-    const filmeCompleto = await Promise.all(
-      apiResponse.data.results.map(async (filme) => {
-        const { genres, runtime } = await this.getMovieGenresAndRunTime(
-          filme.id.toString(),
-        );
-        const { actors, directors } = await this.searchForDetailsApi(
-          filme.id.toString(),
-        );
+        const posterUrl: string | null = details.posterPath
+          ? `${TMDB_IMAGE_BASE_URL}${POSTER_SIZE}${details.posterPath}`
+          : null;
+        const backdropUrl: string | null = details.backdropPath
+          ? `${TMDB_IMAGE_BASE_URL}${BACKDROP_SIZE}${details.backdropPath}`
+          : null;
 
-        return {
+        const diretoresNomes: string[] = credits.directors.map((d) => d.name);
+        const elencoNomes: string[] = credits.actors.map((a) => a.name);
+
+        const filmeDetalhadoResultante: FilmeDetalhado = {
           titulo: filme.title,
-          diretor: directors.map((d) => d.name).join(', '),
+          diretor: diretoresNomes.length > 0 ? diretoresNomes.join(', ') : null,
           ano: filme.release_date?.split('-')[0] || 'N/A',
-          genero: genres.join(', '),
-          duracao: `${runtime} minutos`,
-          elenco: actors
-            .slice(0, 3)
-            .map((a) => a.name)
-            .join(', '),
-          sinopse: filme.overview,
-          classificacao: filme.adult ? 'Adulto' : '16 ou menos',
+          genero: details.genres.join(', ') || null,
+          duracao: details.runtime ? `${details.runtime} minutos` : null,
+          elenco: elencoNomes.length > 0 ? elencoNomes.join(', ') : null,
+          sinopse: filme.overview || null,
+          classificacao: filme.adult ? '18+' : 'Livre/Outra',
           popularidade: filme.popularity,
-        } as FilmeDetalhado;
-      }),
+          posterUrl: posterUrl,
+          backdropUrl: backdropUrl,
+        };
+
+        return filmeDetalhadoResultante;
+      });
+
+    const filmesCompletosComNulls = await Promise.all(filmesDetalhadosPromises);
+    const filmesCompletos = filmesCompletosComNulls.filter(
+      (filme): filme is FilmeDetalhado => filme !== null,
     );
-    const resultadosOrdenados = filmeCompleto.sort(
-      (a, b) => b.popularidade - a.popularidade,
+
+    const resultadosOrdenados = filmesCompletos.sort(
+      (a, b) => (b.popularidade || 0) - (a.popularidade || 0), // Lida com popularidade nula/undefined
     );
     return { data: { results: resultadosOrdenados } };
   }
@@ -138,17 +176,28 @@ export class FilmeService {
 
     return { actors: topActors, directors: directors };
   }
-  private async getMovieGenresAndRunTime(
-    movieId: string,
-  ): Promise<{ genres: string[]; runtime: number }> {
+  private async getMovieDetails(movieId: string): Promise<FilmeDetails> {
     const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${this.API_KEY}&language=pt-BR`;
-    const apiResponse = await firstValueFrom(
-      this.httpService.get<TMDBMovieDetailsResponse>(url),
-    );
+    try {
+      const apiResponse = await firstValueFrom(
+        this.httpService.get<TMDBMovieDetailsResponse>(url),
+      );
 
-    const genres = apiResponse.data.genres.map((genre) => genre.name);
-    const runtime = apiResponse.data.runtime;
+      const genres = apiResponse.data.genres.map((genre) => genre.name);
+      const runtime = apiResponse.data.runtime;
+      const posterPath = apiResponse.data.poster_path;
+      const backdropPath = apiResponse.data.backdrop_path;
 
-    return { genres, runtime };
+      return { genres, runtime, posterPath, backdropPath };
+    } catch (error) {
+      console.error(
+        `Erro ao buscar detalhes completos do filme TMDB (id: ${movieId}):`,
+        error.response?.data || error.message,
+      );
+      throw new HttpException(
+        `Falha ao buscar detalhes do filme ${movieId} no TMDB`,
+        HttpStatus.FAILED_DEPENDENCY,
+      );
+    }
   }
 }
