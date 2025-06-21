@@ -3,16 +3,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FilmeModule } from './filme/filme.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'src/db.sqlite',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true, //true para dev, false para prod
-      logging: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        url: configService.get<string>('DATABASE_URL'),
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        synchronize: true, // Mantenha true para dev.
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      }),
     }),
     ConfigModule.forRoot({
       isGlobal: true,
