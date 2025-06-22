@@ -46,9 +46,10 @@ export default function Home() {
         }
         const data: FilmeData[] = await response.json();
         setMovies(data);
-      } catch (e: any) {
+      } catch (e: unknown) {
         console.error("Falha ao buscar filmes:", e);
-        setError(e.message || 'Erro ao carregar filmes.');
+        const errorMessage = e instanceof Error ? e.message : 'Erro ao carregar filmes.';
+        setError(errorMessage);
         setMovies([]);
       } finally {
         setIsLoading(false);
@@ -121,7 +122,7 @@ export default function Home() {
       );
       console.log('Filme atualizado com sucesso:', filmeSalvo.titulo);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao atualizar o filme:", error);
     } finally {
       handleCloseEditModal();
@@ -155,7 +156,7 @@ export default function Home() {
       }
       setMovies(prevMovies => prevMovies.filter(movie => movie.id !== movieToDelete.id));
       console.log('Filme deletado com sucesso:', movieToDelete.titulo);
-    } catch (error:any) {
+    } catch (error:unknown) {
       console.error("Error ao deletar o filme:", error);
     } finally {
       handleCloseDeleteModal();

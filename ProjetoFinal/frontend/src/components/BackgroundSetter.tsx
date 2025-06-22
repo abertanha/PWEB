@@ -36,7 +36,7 @@ export default function BackgroundSetter({images}: BackgroundSetterProps) {
 
     // Limpeza do timeout de blur
     return () => clearTimeout(blurTimeout);
-  }, []);
+  },[images]);
   
   return (
       <div className={`

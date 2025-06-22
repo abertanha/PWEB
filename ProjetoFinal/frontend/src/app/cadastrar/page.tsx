@@ -10,7 +10,6 @@ import { FilmeDetalhado } from '@/types/filme.types';
 import debounce from 'lodash.debounce';
 import { useCallback } from 'react';
 import MovieForm, { MovieFormDataType, MovieFormErrors} from '@/components/MovieForm';
-import { useRouter } from 'next/navigation';
 import { API_BASE_URL } from '../../../api.config';
 
 
@@ -43,7 +42,6 @@ export default function CadastrarPage() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string>('');
-    const router = useRouter();
 
     useEffect(() => {
       titleInputRef.current?.focus();
@@ -162,9 +160,10 @@ export default function CadastrarPage() {
         console.log('Filme cadastrado com sucesso:', novoFilmeCadastrado);
         setSuccessMessage(`Filme "${novoFilmeCadastrado.titulo}" cadastrado com sucesso!`);
         handleClearForm();
-      } catch (e: any) {
+      } catch (e: unknown) {
         console.error('Falha ao cadastrar filme:', e);
-        setSubmitError(e.message || 'Erro ao cadastrar filme. Tente novamente.');
+        const errorMessage = e instanceof Error ? e.message : 'Erro desconhecido ao cadastrar.';
+        setSubmitError(errorMessage);
       } finally {
         setIsSubmitting(false);
       }
@@ -184,7 +183,6 @@ export default function CadastrarPage() {
         }
 
         setLoadingSugestoes(true);
-        // Não precisa limpar sugestões aqui, a busca vai sobrescrever
 
         try {
           const response = await fetch(
@@ -206,7 +204,7 @@ export default function CadastrarPage() {
             setMostrarSugestoes(true);
           }
 
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error("Falha ao buscar sugestões de filmes:", error);
           setSugestoes([]);
           setMostrarSugestoes(true); // Mantém aberto para mostrar mensagem de erro se desejar
@@ -214,7 +212,7 @@ export default function CadastrarPage() {
           setLoadingSugestoes(false);
         }
       }, 500), // 500ms de delay
-      [API_BASE_URL] // Dependências estáveis. Pode ser um array vazio [].
+      [API_BASE_URL, setSugestoes, setMostrarSugestoes, setLoadingSugestoes] // Dependências estáveis. Pode ser um array vazio [].
     );
 
     const handleSugestaoClick = (sugestao: FilmeDetalhado) => {
