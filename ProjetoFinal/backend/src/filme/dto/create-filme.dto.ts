@@ -1,11 +1,12 @@
 import {
-  IsUUID,
   Length,
   IsNotEmpty,
   IsString,
   IsNumber,
   IsOptional,
   IsUrl,
+  Min,
+  Max,
 } from 'class-validator';
 
 export class CreateFilmeDto {
@@ -44,6 +45,8 @@ export class CreateFilmeDto {
 
   @IsNumber()
   @IsNotEmpty()
+  @Min(0)
+  @Max(5)
   notaUsuario: number;
 
   @IsOptional()
