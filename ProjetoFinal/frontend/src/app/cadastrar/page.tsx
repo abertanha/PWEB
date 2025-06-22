@@ -128,7 +128,7 @@ export default function CadastrarPage() {
       }
       setIsSubmitting(true);
 
-      const payload: FilmeData = {
+      const payload: NewMovieFormData = {
         titulo: formData.titulo,
         diretor: formData.diretor || null,
         ano: formData.ano === undefined ? null : formData.ano, 
@@ -212,7 +212,7 @@ export default function CadastrarPage() {
           setLoadingSugestoes(false);
         }
       }, 500), // 500ms de delay
-      [API_BASE_URL, setSugestoes, setMostrarSugestoes, setLoadingSugestoes] // Dependências estáveis. Pode ser um array vazio [].
+      [setSugestoes, setMostrarSugestoes, setLoadingSugestoes] // Dependências estáveis. Pode ser um array vazio [].
     );
 
     const handleSugestaoClick = (sugestao: FilmeDetalhado) => {
